@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Élèves inscrits{% endblock %}
+{% block content %}
+<h2 class="mb-1">{{ cours.nom }}</h2>
+<p class="text-muted">{{ cours.date_cours.strftime('%d/%m/%Y') }} — {{ cours.heure_debut.strftime('%H:%M') }} à {{ cours.heure_fin.strftime('%H:%M') }}</p>
+
+<div class="table-responsive mt-3">
+<table class="table table-hover bg-white shadow-sm align-middle">
+  <thead><tr><th>Élève</th><th>Email</th><th>Présence</th></tr></thead>
+  <tbody>
+    {% for i in inscriptions %}
+    <tr>
+      <td>{{ i.eleve.prenom }} {{ i.eleve.nom }}</td>
+      <td>{{ i.eleve.email }}</td>
+      <td>
+        <form method="POST" action="{{ url_for('coach.marquer_presence', cours_id=cours.id, inscription_id=i.id) }}" class="d-flex gap-2">
+          <button name="present" value="true" class="btn btn-sm {% if i.present == True %}btn-success{% else %}btn-outline-success{% endif %}">
+            <i class="bi bi-check-lg"></i> Présent
+          </button>
+          <button name="present" value="false" class="btn btn-sm {% if i.present == False %}btn-danger{% else %}btn-outline-danger{% endif %}">
+            <i class="bi bi-x-lg"></i> Absent
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="3" class="text-center text-muted py-4">Aucun élève inscrit pour le moment.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+<a href="{{ url_for('coach.dashboard') }}" class="btn btn-outline-secondary mt-2">&larr; Retour</a>
+{% endblock %}

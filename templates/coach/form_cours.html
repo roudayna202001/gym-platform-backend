@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Créer une session{% endblock %}
+{% block content %}
+<h2 class="mb-4">Créer une nouvelle session</h2>
+<form method="POST" class="card p-4 shadow-sm" style="max-width:700px;">
+  <div class="row g-3">
+    <div class="col-md-12"><label class="form-label">Nom de la session</label><input name="nom" class="form-control" placeholder="Ex: Cross Training" required></div>
+    <div class="col-md-12"><label class="form-label">Description</label><textarea name="description" class="form-control" rows="2"></textarea></div>
+    <div class="col-md-4"><label class="form-label">Date</label><input type="date" name="date_cours" class="form-control" required></div>
+    <div class="col-md-4"><label class="form-label">Heure de début</label><input type="time" name="heure_debut" class="form-control" required></div>
+    <div class="col-md-4"><label class="form-label">Heure de fin</label><input type="time" name="heure_fin" class="form-control" required></div>
+    <div class="col-md-6"><label class="form-label">Capacité maximale</label><input type="number" name="capacite_max" value="20" min="1" class="form-control"></div>
+    <div class="col-md-6"><label class="form-label">Salle</label><input name="salle" class="form-control" placeholder="Ex: Salle 1"></div>
+  </div>
+  <div class="mt-3">
+    <button class="btn btn-primary">Créer la session</button>
+    <a href="{{ url_for('coach.dashboard') }}" class="btn btn-outline-secondary">Annuler</a>
+  </div>
+</form>
+{% endblock %}

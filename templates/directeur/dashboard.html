@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Tableau de bord Directeur{% endblock %}
+{% block content %}
+<h2 class="mb-4">Tableau de bord</h2>
+<div class="row g-3">
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3 shadow-sm h-100">
+      <i class="bi bi-people-fill fs-1 text-primary"></i>
+      <h3>{{ nb_coaches }}</h3>
+      <p class="text-muted mb-0">Coaches</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3 shadow-sm h-100">
+      <i class="bi bi-person-badge fs-1 text-success"></i>
+      <h3>{{ nb_eleves }}</h3>
+      <p class="text-muted mb-0">Élèves</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3 shadow-sm h-100">
+      <i class="bi bi-calendar-event fs-1 text-warning"></i>
+      <h3>{{ nb_cours }}</h3>
+      <p class="text-muted mb-0">Sessions totales</p>
+    </div>
+  </div>
+  <div class="col-6 col-md-3">
+    <div class="card text-center p-3 shadow-sm h-100">
+      <i class="bi bi-calendar-check fs-1 text-danger"></i>
+      <h3>{{ cours_aujourdhui }}</h3>
+      <p class="text-muted mb-0">Sessions aujourd'hui</p>
+    </div>
+  </div>
+</div>
+<div class="mt-4 d-flex gap-2 flex-wrap">
+  <a href="{{ url_for('directeur.ajouter_coach') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Ajouter un coach</a>
+  <a href="{{ url_for('directeur.ajouter_eleve') }}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Ajouter un élève</a>
+  <a href="{{ url_for('directeur.cours') }}" class="btn btn-outline-dark"><i class="bi bi-calendar3"></i> Voir toutes les sessions</a>
+</div>
+{% endblock %}

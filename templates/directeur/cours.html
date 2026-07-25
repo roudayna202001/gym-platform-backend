@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Toutes les sessions{% endblock %}
+{% block content %}
+<h2 class="mb-4">Toutes les sessions</h2>
+<div class="table-responsive">
+<table class="table table-hover bg-white shadow-sm align-middle">
+  <thead><tr><th>Session</th><th>Coach</th><th>Date</th><th>Horaire</th><th>Salle</th><th>Inscrits</th></tr></thead>
+  <tbody>
+    {% for c in cours_list %}
+    <tr>
+      <td>{{ c.nom }}</td>
+      <td>{{ c.coach.prenom }} {{ c.coach.nom }}</td>
+      <td>{{ c.date_cours.strftime('%d/%m/%Y') }}</td>
+      <td>{{ c.heure_debut.strftime('%H:%M') }} - {{ c.heure_fin.strftime('%H:%M') }}</td>
+      <td>{{ c.salle or '-' }}</td>
+      <td>
+        <span class="badge {% if c.nb_inscrits >= c.capacite_max %}bg-danger{% else %}bg-success{% endif %}">
+          {{ c.nb_inscrits }} / {{ c.capacite_max }}
+        </span>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="text-center text-muted py-4">Aucune session pour le moment.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Mon planning{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Mon planning</h2>
+  <a href="{{ url_for('eleve.cours_disponibles') }}" class="btn btn-primary"><i class="bi bi-search"></i> Réserver une session</a>
+</div>
+
+<div class="row g-3">
+  {% for i in mes_inscriptions %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ i.cours.nom }}</h5>
+        <p class="text-muted mb-1"><i class="bi bi-person"></i> Coach : {{ i.cours.coach.prenom }} {{ i.cours.coach.nom }}</p>
+        <p class="text-muted mb-1"><i class="bi bi-calendar3"></i> {{ i.cours.date_cours.strftime('%d/%m/%Y') }}</p>
+        <p class="text-muted mb-2"><i class="bi bi-clock"></i> {{ i.cours.heure_debut.strftime('%H:%M') }} - {{ i.cours.heure_fin.strftime('%H:%M') }}</p>
+        <form method="POST" action="{{ url_for('eleve.annuler', id=i.cours.id) }}" onsubmit="return confirm('Annuler cette réservation ?');">
+          <button class="btn btn-sm btn-outline-danger">Annuler ma réservation</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p class="text-muted">Vous n'avez aucune session réservée. Cliquez sur "Réserver une session" pour vous inscrire.</p>
+  {% endfor %}
+</div>
+{% endblock %}

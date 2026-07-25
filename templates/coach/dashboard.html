@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Mes sessions{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Mes sessions à venir</h2>
+  <a href="{{ url_for('coach.ajouter_cours') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Créer une session</a>
+</div>
+
+<div class="row g-3">
+  {% for c in mes_cours %}
+  <div class="col-md-6 col-lg-4">
+    <div class="card shadow-sm h-100">
+      <div class="card-body">
+        <h5 class="card-title">{{ c.nom }}</h5>
+        <p class="text-muted mb-1"><i class="bi bi-calendar3"></i> {{ c.date_cours.strftime('%d/%m/%Y') }}</p>
+        <p class="text-muted mb-1"><i class="bi bi-clock"></i> {{ c.heure_debut.strftime('%H:%M') }} - {{ c.heure_fin.strftime('%H:%M') }}</p>
+        <p class="text-muted mb-2"><i class="bi bi-geo-alt"></i> {{ c.salle or 'Salle non définie' }}</p>
+        <span class="badge {% if c.nb_inscrits >= c.capacite_max %}bg-danger{% else %}bg-success{% endif %} mb-2">
+          {{ c.nb_inscrits }} / {{ c.capacite_max }} inscrits
+        </span>
+        <div class="d-flex gap-2 mt-2">
+          <a href="{{ url_for('coach.eleves_cours', id=c.id) }}" class="btn btn-sm btn-outline-primary">Voir les élèves</a>
+          <form method="POST" action="{{ url_for('coach.supprimer_cours', id=c.id) }}" onsubmit="return confirm('Supprimer cette session ?');">
+            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% else %}
+  <p class="text-muted">Aucune session à venir. Cliquez sur "Créer une session" pour commencer.</p>
+  {% endfor %}
+</div>
+{% endblock %}

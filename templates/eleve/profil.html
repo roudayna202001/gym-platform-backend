@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Mon profil{% endblock %}
+{% block content %}
+<h2 class="mb-4">Mon profil</h2>
+<div class="card shadow-sm p-4" style="max-width:500px;">
+  <p><strong>Nom :</strong> {{ current_user.prenom }} {{ current_user.nom }}</p>
+  <p><strong>Email :</strong> {{ current_user.email }}</p>
+  <p><strong>Téléphone :</strong> {{ current_user.telephone or '-' }}</p>
+  <p><strong>Type d'abonnement :</strong> {{ current_user.abonnement_type or 'Aucun' }}</p>
+  <p class="mb-0"><strong>Membre depuis :</strong> {{ current_user.date_creation.strftime('%d/%m/%Y') }}</p>
+</div>
+{% endblock %}

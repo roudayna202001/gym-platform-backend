@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Coaches{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Coaches</h2>
+  <a href="{{ url_for('directeur.ajouter_coach') }}" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Ajouter</a>
+</div>
+<div class="table-responsive">
+<table class="table table-hover bg-white shadow-sm align-middle">
+  <thead><tr><th>Nom</th><th>Email</th><th>Spécialité</th><th>Téléphone</th><th></th></tr></thead>
+  <tbody>
+    {% for coach in coaches %}
+    <tr>
+      <td>{{ coach.prenom }} {{ coach.nom }}</td>
+      <td>{{ coach.email }}</td>
+      <td>{{ coach.specialite or '-' }}</td>
+      <td>{{ coach.telephone or '-' }}</td>
+      <td class="text-end">
+        <form method="POST" action="{{ url_for('directeur.supprimer_coach', id=coach.id) }}"
+              onsubmit="return confirm('Supprimer ce coach ?');" class="d-inline">
+          <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" class="text-center text-muted py-4">Aucun coach pour le moment.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

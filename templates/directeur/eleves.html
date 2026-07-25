@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Élèves{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Élèves</h2>
+  <a href="{{ url_for('directeur.ajouter_eleve') }}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Ajouter</a>
+</div>
+<div class="table-responsive">
+<table class="table table-hover bg-white shadow-sm align-middle">
+  <thead><tr><th>Nom</th><th>Email</th><th>Abonnement</th><th>Téléphone</th><th></th></tr></thead>
+  <tbody>
+    {% for eleve in eleves %}
+    <tr>
+      <td>{{ eleve.prenom }} {{ eleve.nom }}</td>
+      <td>{{ eleve.email }}</td>
+      <td>{{ eleve.abonnement_type or '-' }}</td>
+      <td>{{ eleve.telephone or '-' }}</td>
+      <td class="text-end">
+        <form method="POST" action="{{ url_for('directeur.supprimer_eleve', id=eleve.id) }}"
+              onsubmit="return confirm('Supprimer cet élève ?');" class="d-inline">
+          <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="5" class="text-center text-muted py-4">Aucun élève pour le moment.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
